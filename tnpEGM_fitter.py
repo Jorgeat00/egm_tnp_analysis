@@ -220,6 +220,7 @@ if args.sumUp:
             effis['tagSel'][0],
             )
         print astr
+
         fOut.write( astr + '\n' )
     fOut.close()
 
