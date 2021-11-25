@@ -16,8 +16,10 @@ def RunTnP(listOfArguments):
 
 den = ['ttH'] 
 num = ['passttH'] 
-years = ['2016', '2017', '2018']
-leps = ['3l', '2lss']
+years = ['2017']
+#years = ['2016', '2017', '2018']
+leps = ['3l']
+#leps = ['3l', '2lss']
 
 listInput = []
 for d in den:
@@ -30,104 +32,13 @@ print 'List of inputs (%i):\n'%njobs, listInput
 
 commands = [
 #3l muon
-  'python tnpEGM_fitter.py etc/config/settings_%s_ele_%s_%s.py --flag %s --createBins',
-  'python tnpEGM_fitter.py etc/config/settings_%s_ele_%s_%s.py --flag %s --createHists',
-  'python tnpEGM_fitter.py etc/config/settings_%s_ele_%s_%s.py --flag %s --doFit',
-  'python tnpEGM_fitter.py etc/config/settings_%s_ele_%s_%s.py --flag %s --doFit --mcSig --altSig',
-  'python tnpEGM_fitter.py etc/config/settings_%s_ele_%s_%s.py --flag %s --doFit --altSig',
-  'python tnpEGM_fitter.py etc/config/settings_%s_ele_%s_%s.py --flag %s --doFit --altBkg',
-  'python tnpEGM_fitter.py etc/config/settings_%s_ele_%s_%s.py --flag %s --sumUp'
-
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_3l.py --flag %s --createBins',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_3l.py --flag %s --createHists',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_3l.py --flag %s --doFit',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_3l.py --flag %s --doFit --mcSig --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_3l.py --flag %s --doFit --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_3l.py --flag %s --doFit --altBkg',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_3l.py --flag %s --sumUp'
-
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_3l.py --flag %s --createBins',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_3l.py --flag %s --createHists',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_3l.py --flag %s --doFit',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_3l.py --flag %s --doFit --mcSig --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_3l.py --flag %s --doFit --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_3l.py --flag %s --doFit --altBkg',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_3l.py --flag %s --sumUp'
-
-#2lss muons
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2016_2lss.py --flag %s --createBins',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2016_2lss.py --flag %s --createHists',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2016_2lss.py --flag %s --doFit',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2016_2lss.py --flag %s --doFit --mcSig --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2016_2lss.py --flag %s --doFit --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2016_2lss.py --flag %s --doFit --altBkg',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2016_2lss.py --flag %s --sumUp'
-
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_2lss.py --flag %s --createBins',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_2lss.py --flag %s --createHists',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_2lss.py --flag %s --doFit',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_2lss.py --flag %s --doFit --mcSig --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_2lss.py --flag %s --doFit --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_2lss.py --flag %s --doFit --altBkg',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_muo_2017_2lss.py --flag %s --sumUp'
-
-#  'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_2lss.py --flag %s --createBins',
-#  'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_2lss.py --flag %s --createHists',
-#  'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_2lss.py --flag %s --doFit',
-#  'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_2lss.py --flag %s --doFit --mcSig --altSig',
-#  'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_2lss.py --flag %s --doFit --altSig',
-#  'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_2lss.py --flag %s --doFit --altBkg',
-#  'python tnpEGM_fitter.py etc/config/settings_%s_muo_2018_2lss.py --flag %s --sumUp'
-
-#3l electrons
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_3l.py --flag %s --createBins',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_3l.py --flag %s --createHists',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_3l.py --flag %s --doFit',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_3l.py --flag %s --doFit --mcSig --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_3l.py --flag %s --doFit --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_3l.py --flag %s --doFit --altBkg',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_3l.py --flag %s --sumUp'
-
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_3l.py --flag %s --createBins',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_3l.py --flag %s --createHists',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_3l.py --flag %s --doFit',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_3l.py --flag %s --doFit --mcSig --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_3l.py --flag %s --doFit --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_3l.py --flag %s --doFit --altBkg',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_3l.py --flag %s --sumUp'
-
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_3l.py --flag %s --createBins',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_3l.py --flag %s --createHists',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_3l.py --flag %s --doFit',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_3l.py --flag %s --doFit --mcSig --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_3l.py --flag %s --doFit --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_3l.py --flag %s --doFit --altBkg',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_3l.py --flag %s --sumUp'
-
-#2lss electrons
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_2lss.py --flag %s --createBins',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_2lss.py --flag %s --createHists',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_2lss.py --flag %s --doFit',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_2lss.py --flag %s --doFit --mcSig --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_2lss.py --flag %s --doFit --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_2lss.py --flag %s --doFit --altBkg',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2016_2lss.py --flag %s --sumUp'
-
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_2lss.py --flag %s --createBins',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_2lss.py --flag %s --createHists',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_2lss.py --flag %s --doFit',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_2lss.py --flag %s --doFit --mcSig --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_2lss.py --flag %s --doFit --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_2lss.py --flag %s --doFit --altBkg',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2017_2lss.py --flag %s --sumUp'
-
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_2lss.py --flag %s --createBins',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_2lss.py --flag %s --createHists',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_2lss.py --flag %s --doFit',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_2lss.py --flag %s --doFit --mcSig --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_2lss.py --flag %s --doFit --altSig',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_2lss.py --flag %s --doFit --altBkg',
-# 'python tnpEGM_fitter.py etc/config/settings_%s_ele_2018_2lss.py --flag %s --sumUp'
+  'python tnpEGM_fitter.py etc/config/settings_%s_muo_%s_%s.py --flag %s --createBins',
+  'python tnpEGM_fitter.py etc/config/settings_%s_muo_%s_%s.py --flag %s --createHists',
+  'python tnpEGM_fitter.py etc/config/settings_%s_muo_%s_%s.py --flag %s --doFit',
+  'python tnpEGM_fitter.py etc/config/settings_%s_muo_%s_%s.py --flag %s --doFit --mcSig --altSig',
+  'python tnpEGM_fitter.py etc/config/settings_%s_muo_%s_%s.py --flag %s --doFit --altSig',
+  'python tnpEGM_fitter.py etc/config/settings_%s_muo_%s_%s.py --flag %s --doFit --altBkg',
+  'python tnpEGM_fitter.py etc/config/settings_%s_muo_%s_%s.py --flag %s --sumUp'
 
 ]
 if njobs == 1:
