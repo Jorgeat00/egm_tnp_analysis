@@ -17,7 +17,9 @@ baseOutDir = 'finalresults/TnP_ttH_muon_2017_3l/'
 #############################################################
 ### samples are defined in etc/inputs/tnpSampleDef.py
 ### not: you can setup another sampleDef File in inputs
-import etc.inputs.tnpSampleDef_ttH_muo_2017 as tnpSamples
+#import etc.inputs.tnpSampleDef_ttH_muo_2017 as tnpSamples
+#for testing
+import etc.inputs.tnpSampleDef as tnpSamples
 tnpTreeDir = './'#tnpEleIDs'
 
 samplesDef = {
@@ -96,10 +98,10 @@ additionalCuts = {
 ########## fitting params to tune fit by hand if necessary
 #############################################################
 tnpParNomFit = [
-    #"meanP[-0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
-    #"meanF[0.0,-5.0,5.0]","sigmaF[0.4,0.2,5.0]",
-    #"acmsP[60.,50.,80.]","betaP[0.05,0.01,0.08]","gammaP[0.1, -2, 2]","peakP[90.0]",
-    #"acmsF[60.,50.,90.]","betaF[0.05,0.01,0.08]","gammaF[0.1, -1, 2]","peakF[90.0]",
+    "meanP[-0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
+    "meanF[0.0,-5.0,5.0]","sigmaF[0.4,0.2,5.0]",
+    "acmsP[60.,50.,80.]","betaP[0.05,0.01,0.08]","gammaP[0.1, -2, 2]","peakP[90.0]",
+    "acmsF[60.,50.,90.]","betaF[0.05,0.01,0.08]","gammaF[0.1, -1, 2]","peakF[90.0]",
     #bin0
     #"meanP[0.3,-1.0,1.0]","sigmaP[0.5,0.1,5.0]",
     #"meanF[0.3,-1.0,1.0]","sigmaF[0.4,0.2,5.0]",
@@ -122,10 +124,10 @@ tnpParNomFit = [
     #"acmsF[20.,0.,50.]","betaF[0.05,0.01,0.08]","gammaF[0.1, -1, 2]","peakF[90.0]",
 
     #bin13,14
-    "meanP[0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
-    "meanF[0.0,-5.0,5.0]","sigmaF[0.4,0.2,5.0]",
-    "acmsP[20.,0.,60.]","betaP[0.05,0.01,0.08]","gammaP[0.1, -2, 2]","peakP[90.0]",
-    "acmsF[20.,0.,60.]","betaF[0.05,0.01,0.08]","gammaF[0.1, -1, 2]","peakF[90.0]",
+    #"meanP[0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
+    #"meanF[0.0,-5.0,5.0]","sigmaF[0.4,0.2,5.0]",
+    #"acmsP[20.,0.,60.]","betaP[0.05,0.01,0.08]","gammaP[0.1, -2, 2]","peakP[90.0]",
+    #"acmsF[20.,0.,60.]","betaF[0.05,0.01,0.08]","gammaF[0.1, -1, 2]","peakF[90.0]",
     #bin26
     #"meanP[0.0,-5.0,5.0]","sigmaP[0.5,0.1,5.0]",
     #"meanF[0.0,-5.0,5.0]","sigmaF[0.4,0.1,5.0]",
@@ -141,14 +143,14 @@ tnpParAltSigFit = [
     ]
      
 tnpParAltBkgFit = [
-    #"meanP[-0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
-    #"meanF[-0.0,-5.0,5.0]","sigmaF[0.9,0.5,5.0]",
-    #"alphaP[0.,-5.,5.]",
-    #"alphaF[0.,-5.,5.]",
-    #bin39
-    "meanP[1.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
+    "meanP[-0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
     "meanF[-0.0,-5.0,5.0]","sigmaF[0.9,0.5,5.0]",
     "alphaP[0.,-5.,5.]",
     "alphaF[0.,-5.,5.]",
+    #bin39
+    #"meanP[1.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
+    #"meanF[-0.0,-5.0,5.0]","sigmaF[0.9,0.5,5.0]",
+    #"alphaP[0.,-5.,5.]",
+    #"alphaF[0.,-5.,5.]",
     ]
         
