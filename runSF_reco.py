@@ -13,7 +13,7 @@ def RunTnP(listOfArguments):
   for c in commands: ex(GetCommand(c, den, tag))
   return True
 
-den = ['ttbarRun3'] 
+den = ['WZRun3'] 
 num = ['passreco']
 
 listInput = []
