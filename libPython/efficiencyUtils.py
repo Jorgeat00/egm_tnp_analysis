@@ -72,21 +72,30 @@ class efficiency:
         self.syst[self.iAltTagSelec+2] = systAltTagSelec
         
         self.systCombined = 0
-        for isyst in range(6):
-            self.systCombined += self.syst[isyst]*self.syst[isyst];
-            #print 'Error syst: %s,%1.3f'%(isyst,self.syst[isyst])
-        #print '**********************'
-        #print 'systAltMC %1.3f, averageEffMC %1.3f'%(systAltMC, averageEffMC) 
-        #print '**********************'
-        #print 'errEffData      : %1.3f'%(self.syst[0])
-        #print 'errEffMC        : %1.3f'%(self.syst[1])
-        #print 'systAltBkg      : %1.3f'%(self.syst[2])
-        #print 'systAltSig      : %1.3f'%(self.syst[3])
-        #print '>>> systAltMC       : %1.3f'%(self.syst[4])
-        #print 'systAltTagSelec : %1.3f'%(self.syst[5])
-
-        self.systCombined = math.sqrt(self.systCombined)
+        #stat. com suggestion, if stat unc > syst. unc use only stat.
+        #for isyst in range(6):
+        #    print 'Error syst: %s,%1.3f'%(isyst,self.syst[isyst])
+        self.statunc = self.syst[0]*self.syst[0]+self.syst[1]*self.syst[1];
+        self.systunc = self.syst[2]*self.syst[2]+self.syst[3]*self.syst[3]+self.syst[4]*self.syst[4]+self.syst[5]*self.syst[5];
+        if math.sqrt(self.statunc) > math.sqrt(self.systunc):
+            self.systCombined = math.sqrt(self.statunc);
+        else:
+            for isyst in range(6):
+                self.systCombined += self.syst[isyst]*self.syst[isyst];
+                #print 'Error syst: %s,%1.3f'%(isyst,self.syst[isyst])
+            #print '**********************'
+            #print 'systAltMC %1.3f, averageEffMC %1.3f'%(systAltMC, averageEffMC) 
+            #print '**********************'
+            #print 'errEffData      : %1.3f'%(self.syst[0])
+            #print 'errEffMC        : %1.3f'%(self.syst[1])
+            #print 'systAltBkg      : %1.3f'%(self.syst[2])
+            #print 'systAltSig      : %1.3f'%(self.syst[3])
+            #print '>>> systAltMC       : %1.3f'%(self.syst[4])
+            #print 'systAltTagSelec : %1.3f'%(self.syst[5])
+            
+            self.systCombined = math.sqrt(self.systCombined)
         print 'Combined error: %1.3f, averageEffData %1.3f, averageEffMC, %1.3f'%(self.systCombined,averageEffData,averageEffMC)
+        print 'Stat unc.: %1.5f, syst. unc. %1.5f '%( math.sqrt(self.statunc),  math.sqrt(self.systunc))
 
 
     def __add__(self,eff):

@@ -91,6 +91,8 @@ def getAllEffi( info, bindef ):
         rootfile = rt.TFile( info['data'], 'read' )
         hP = rootfile.Get('%s_Pass'%bindef['name'])
         hF = rootfile.Get('%s_Fail'%bindef['name'])
+        #print "nP: %f, eP: %f, nF: %f, eF: %f", (nP, eP, nF, eF)
+        #print "math.sqrt(hP.Integral()): %f , math.sqrt(hF.Integral()): %f", (math.sqrt(hP.Integral()),math.sqrt(hF.Integral()))
 
         if eP > math.sqrt(hP.Integral()) : eP = math.sqrt(hP.Integral())
         if eF > math.sqrt(hF.Integral()) : eF = math.sqrt(hF.Integral())

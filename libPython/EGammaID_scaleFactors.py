@@ -114,13 +114,13 @@ def EffiGraph1D(effDataList, effMCList, sfList ,nameout, xAxis = 'pT', yAxis = '
     listOfTGraph2 = []
     listOfMC      = []
 
-    xMin = 20
+    xMin = 10
     xMax = 120
     if 'pT' in xAxis or 'pt' in xAxis:
         p1.SetLogx()
         p2.SetLogx()    
         #xMin = 8
-        xMin = 25
+        xMin = 10
         xMax = 500
     elif 'vtx' in xAxis or 'Vtx' in xAxis or 'PV' in xAxis:
         xMin =  3

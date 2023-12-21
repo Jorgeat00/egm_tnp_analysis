@@ -98,6 +98,8 @@ def histFitterNominal( sample, tnpBin, tnpWorkspaceParam ):
     infile = rt.TFile( sample.histFile, "read")
     hP = infile.Get('%s_Pass' % tnpBin['name'] )
     hF = infile.Get('%s_Fail' % tnpBin['name'] )
+    #hP.Rebin(2)
+    #hF.Rebin(2)
     fitter = tnpFitter( hP, hF, tnpBin['name'] )
     infile.Close()
 
@@ -106,18 +108,26 @@ def histFitterNominal( sample, tnpBin, tnpWorkspaceParam ):
     rootfile = rt.TFile(sample.nominalFit,'update')
     fitter.setOutputFile( rootfile )
     
-    ## generated Z LineShape
-    ## for high pT change the failing spectra to any probe to get statistics
+    #### generated Z LineShape
+    #### for high pT change the failing spectra to any probe to get statistics
     fileTruth  = rt.TFile(sample.mcRef.histFile,'read')
     histZLineShapeP = fileTruth.Get('%s_Pass'%tnpBin['name'])
-    histZLineShapeF = fileTruth.Get('%s_Fail'%tnpBin['name'])
-    if ptMin( tnpBin ) > minPtForSwitch: 
-        histZLineShapeF = fileTruth.Get('%s_Pass'%tnpBin['name'])
-#        fitter.fixSigmaFtoSigmaP()
+    #for some reason this Zlineshape does not work
+    #histZLineShapeF = fileTruth.Get('%s_Fail'%tnpBin['name'])
+    ##if ptMin( tnpBin ) > minPtForSwitch: 
+    ##    histZLineShapeF = fileTruth.Get('%s_Pass'%tnpBin['name'])
+    ##    #fitter.fixSigmaFtoSigmaP()
+    ##testing this option
+    histZLineShapeF = fileTruth.Get('%s_Pass'%tnpBin['name'])
     fitter.setZLineShapes(histZLineShapeP,histZLineShapeF)
-
     fileTruth.Close()
-
+    
+    ## generated Z LineShape from signal alternative fit
+    #fileTruth = rt.TFile('etc/inputs/ZeeGenLevel.root','read')
+    #histZLineShape = fileTruth.Get('Mass')
+    #fitter.setZLineShapes(histZLineShape,histZLineShape)
+    #fileTruth.Close()
+   
     ### set workspace
     workspace = rt.vector("string")()
     for iw in tnpWorkspace:
@@ -155,10 +165,11 @@ def histFitterAltSig( sample, tnpBin, tnpWorkspaceParam ):
     infile = rt.TFile( sample.histFile, "read")
     hP = infile.Get('%s_Pass' % tnpBin['name'] )
     hF = infile.Get('%s_Fail' % tnpBin['name'] )
+    #hF = infile.Get('%s_Pass' % tnpBin['name'] )
     ## for high pT change the failing spectra to passing probe to get statistics 
     ## MC only: this is to get MC parameters in data fit!
-    if sample.isMC and ptMin( tnpBin ) > minPtForSwitch:     
-        hF = infile.Get('%s_Pass' % tnpBin['name'] )
+    #if sample.isMC and ptMin( tnpBin ) > minPtForSwitch:     
+    #    hF = infile.Get('%s_Pass' % tnpBin['name'] )
     fitter = tnpFitter( hP, hF, tnpBin['name'] )
 #    fitter.fixSigmaFtoSigmaP()
     infile.Close()
@@ -172,6 +183,13 @@ def histFitterAltSig( sample, tnpBin, tnpWorkspaceParam ):
     histZLineShape = fileTruth.Get('Mass')
     fitter.setZLineShapes(histZLineShape,histZLineShape)
     fileTruth.Close()
+    
+    ### generated Z LineShape as in the nominal case
+    ### for high pT change the failing spectra to any probe to get statistics
+    #fileTruth  = rt.TFile(sample.mcRef.histFile,'read')
+    #histZLineShapeP = fileTruth.Get('%s_Pass'%tnpBin['name'])
+    #histZLineShapeF = fileTruth.Get('%s_Fail'%tnpBin['name'])
+    #fitter.setZLineShapes(histZLineShapeP,histZLineShapeF)
 
     ### set workspace
     workspace = rt.vector("string")()
@@ -220,10 +238,11 @@ def histFitterAltBkg( sample, tnpBin, tnpWorkspaceParam ):
     ## for high pT change the failing spectra to any probe to get statistics
     fileTruth = rt.TFile(sample.mcRef.histFile,'read')
     histZLineShapeP = fileTruth.Get('%s_Pass'%tnpBin['name'])
-    histZLineShapeF = fileTruth.Get('%s_Fail'%tnpBin['name'])
-    if ptMin( tnpBin ) > minPtForSwitch: 
-        histZLineShapeF = fileTruth.Get('%s_Pass'%tnpBin['name'])
-#        fitter.fixSigmaFtoSigmaP()
+    #histZLineShapeF = fileTruth.Get('%s_Fail'%tnpBin['name'])
+    #if ptMin( tnpBin ) > minPtForSwitch: 
+    #    histZLineShapeF = fileTruth.Get('%s_Pass'%tnpBin['name'])
+    histZLineShapeF = fileTruth.Get('%s_Pass'%tnpBin['name'])
+    fitter.fixSigmaFtoSigmaP()
     fitter.setZLineShapes(histZLineShapeP,histZLineShapeF)
     fileTruth.Close()
 
