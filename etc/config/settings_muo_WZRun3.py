@@ -3,11 +3,7 @@
 #############################################################
 # flag that defined the numerator
 flags = {
-    #'passtight'   : '(Probe_tightId && Probe_pt > 35 && abs(Probe_eta) < 2.4 && Probe_pfRelIso04_all < 0.15 && abs(Probe_dxy) < 0.2 && abs(Probe_dz) < 0.5)',
-#    'passtight'    : '(Probe_conept > 10 && Probe_jetBTagDeepFlavB < 0.2783 && Probe_mvaTTHRun3 > 0.85  && Probe_mediumId==1)',
-#october 13, 2023
-#    'passtight'    : '(Probe_conept > 10 && Probe_jetBTagDeepFlavB < 0.2783 && Probe_mvaTTHRun3 > 0.64  && Probe_mediumId==1)',
-#december 4, 2023
+    #december 4, 2023
     'passtight'    : '(Probe_conept > 10 && Probe_jetBTagDeepFlavB < 0.3196 && Probe_mvaTTHRun3 > 0.64  && Probe_mediumId==1)',
 
 }
@@ -15,8 +11,8 @@ flags = {
 #baseOutDir = 'results_retrain/muon_tight_altMC/'
 #baseOutDir = 'results_newWP/muon_tight_altMC/'
 #baseOutDir = 'results_newWP_Zline/muon_tight_altMC/'
-baseOutDir = 'results_conept/muon_tight_altMC/'
-#baseOutDir = 'results_recopt_newbinning/muon_tight_altMC/'
+#baseOutDir = 'results_conept/muon_tight_altMC/'
+baseOutDir = 'results_recopt_newbinning/muon_tight_altMC/'
 
 #############################################################
 ########## samples definition  - preparing the samples
@@ -69,7 +65,7 @@ if not samplesDef['tagSel'] is None:
 #############################################################
 biningDef = [
    { 'var' : 'abs(Probe_eta)' , 'type': 'float', 'bins': [0, 0.9, 1.2, 2.1, 2.4] },
-   { 'var' : 'Probe_conept' , 'type': 'float', 'bins': [15,25,30,35,40,45,55,70,100,500] },
+   { 'var' : 'Probe_pt' , 'type': 'float', 'bins': [15,25,30,35,40,45,55,70,100,500] },
 ]
 
 #############################################################

@@ -3,18 +3,9 @@
 #############################################################
 # flag that defined the numerator
 flags = {
-    #'passtight'   : '(Probe_cutBased == 4 && Probe_pt > 35 && abs(Probe_eta) < 2.4 && (abs(Probe_eta-Probe_deltaEtaSC)>1.566 || abs(Probe_eta-Probe_deltaEtaSC) < 1.444) && abs(Probe_dxy) < 0.2 && abs(Probe_dz) < 0.5)',
-#    'passtight'         : '(Probe_conept > 10 && (Probe_eInvMinusPInv>-0.04)&& (Probe_hoe < 0.10*(Probe_sieie<(0.011-(-0.019)*(abs((Probe_deltaEtaSC)-(-Probe_eta))>1.479)))) && Probe_convVeto &&  Probe_lostHits==0 && Probe_jetBTagDeepFlavB < 0.2783 && Probe_mvaTTHRun3 > 0.8 && (abs(Probe_eta-Probe_deltaEtaSC)>1.566 || abs(Probe_eta-Probe_deltaEtaSC) < 1.444))',
-#october 13, 2023
-#    'passtight'         : '(Probe_conept > 10 && (Probe_eInvMinusPInv>-0.04)&& (Probe_hoe < 0.10*(Probe_sieie<(0.011-(-0.019)*(abs((Probe_deltaEtaSC)-(-Probe_eta))>1.479)))) && Probe_convVeto &&  Probe_lostHits==0 && Probe_jetBTagDeepFlavB < 0.2783 && Probe_mvaTTHRun3 > 0.97 && (abs(Probe_eta-Probe_deltaEtaSC)>1.566 || abs(Probe_eta-Probe_deltaEtaSC) < 1.444))',
 #december 4, 2023
     'passtight'         : '(Probe_conept > 10 && (Probe_eInvMinusPInv>-0.04)&& (Probe_hoe < 0.10*(Probe_sieie<(0.011-(-0.019)*(abs((Probe_deltaEtaSC)-(-Probe_eta))>1.479)))) && Probe_convVeto &&  Probe_lostHits==0 && Probe_jetBTagDeepFlavB < 0.3196 && Probe_mvaTTHRun3 > 0.97 && (abs(Probe_eta-Probe_deltaEtaSC)>1.566 || abs(Probe_eta-Probe_deltaEtaSC) < 1.444))',
 }
-#baseOutDir = 'results/ele_tight_altMC/'
-#baseOutDir = 'results_retrain/ele_tight_altMC/'
-#baseOutDir = 'results_newWP/ele_tight_altMC/'
-#baseOutDir = 'results_newWP_Zline/ele_tight_altMC/'
-#baseOutDir = 'results_conept/ele_tight_altMC/'
 baseOutDir = 'results_recopt_newbinning/ele_tight_altMC/'
 
 #############################################################
@@ -75,12 +66,8 @@ biningDef = [
 ########## Cuts definition for all samples
 #############################################################
 ### cut
-#cutBase   = 'tag_Ele_pt > 30 && abs(tag_sc_eta) < 2.17 && el_q*tag_Ele_q < 0'
-#cutBase = "TnP_trigger && Tag_pt > 37 && abs(Tag_eta) < 2.4 && Tag_pfRelIso03_all < 0.15 && Probe_pt > 20 && abs(Tag_dxy) < 0.05 && abs(Tag_dz) < 0.1 && Tag_isGenMatched && Probe_cutBased > 1"
-#cutBase = "TnP_trigger && Tag_pt > 37 && abs(Tag_eta) < 2.4 && (abs(Tag_eta-Tag_deltaEtaSC)>1.566 || abs(Tag_eta-Tag_deltaEtaSC) < 1.444) && abs(Tag_dxy) < 0.05 && abs(Tag_dz) < 0.1 && Tag_isGenMatched"
-#loose
 cutBase = "TnP_trigger && Tag_conept > 30 && abs(Tag_eta) < 2.5 && (abs(Tag_eta-Tag_deltaEtaSC)>1.566 || abs(Tag_eta-Tag_deltaEtaSC) < 1.444) && Tag_jetRelIso < 0.15 && Probe_charge*Tag_charge < 0 && abs(Tag_dxy) < 0.05 && abs(Tag_dz) < 0.1 && Tag_isGenMatched && Probe_isGenMatched == 1 && Probe_conept > 10 && abs(Probe_eta) < 2.5 && abs(Probe_dxy)<0.05 && abs(Probe_dz)<0.1 && Probe_miniPFRelIso_all < 0.4 && Probe_sip3d < 8  && Probe_mvaNoIso_Fall17V2_WPL"
-#cutBase += " && Probe_passMP == 1" # Eff over medium prompt
+
 # can add addtionnal cuts for some bins (first check bin number using tnpEGM --checkBins)
 additionalCuts = { 
 #    0 : 'tag_Ele_trigMVA > 0.92 && sqrt( 2*event_met_pfmet*tag_Ele_pt*(1-cos(event_met_pfphi-tag_Ele_phi))) < 45',
@@ -102,15 +89,15 @@ additionalCuts = {
 ########## fitting params to tune fit by hand if necessary
 #############################################################
 tnpParNomFit = [
-    #"meanP[-0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
-    #"meanF[0.0,-5.0,5.0]","sigmaF[0.4,0.2,5.0]",
-    #"acmsP[60.,50.,80.]","betaP[0.05,0.01,0.08]","gammaP[0.1, -2, 2]","peakP[90.0]",
-    #"acmsF[60.,50.,90.]","betaF[0.05,0.01,0.08]","gammaF[0.1, -1, 2]","peakF[90.0]",
-    #bin18
-    "meanP[0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
+    "meanP[-0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
     "meanF[0.0,-5.0,5.0]","sigmaF[0.4,0.2,5.0]",
-    "acmsP[60.,50.,200.]","betaP[0.05,0.01,0.08]","gammaP[0.1, -2, 2]","peakP[90.0]",
-    "acmsF[60.,50.,80.]","betaF[0.04,0.01,0.05]","gammaF[0.03, 0.02, 0.05]","peakF[90.0]",
+    "acmsP[60.,50.,80.]","betaP[0.05,0.01,0.08]","gammaP[0.1, -2, 2]","peakP[90.0]",
+    "acmsF[60.,50.,90.]","betaF[0.05,0.01,0.08]","gammaF[0.1, -1, 2]","peakF[90.0]",
+    #bin18
+    #"meanP[0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
+    #"meanF[0.0,-5.0,5.0]","sigmaF[0.4,0.2,5.0]",
+    #"acmsP[60.,50.,200.]","betaP[0.05,0.01,0.08]","gammaP[0.1, -2, 2]","peakP[90.0]",
+    #"acmsF[60.,50.,80.]","betaF[0.04,0.01,0.05]","gammaF[0.03, 0.02, 0.05]","peakF[90.0]",
     ]
 
 tnpParAltSigFit = [
