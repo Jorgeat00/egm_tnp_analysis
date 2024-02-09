@@ -298,6 +298,7 @@ class efficiencyList:
         #import os
         print 'hname = ', hname
         print 'htitle = ', htitle
+        '''
         print 'xbinsTab = ', xbinsTab
         print 'ybinsTab = ', ybinsTab
         print 'xbins = ', xbins
@@ -306,6 +307,7 @@ class efficiencyList:
         print 'xxxx len(ybinsTab) = ',len(ybinsTab)-1
         print 'xxxx len(xbins) = ',len(xbins)
         print 'xxxx len(ybins) = ',len(ybins)
+        '''
         #h2dd = rt.TH2F(hname,htitle,xbinsTab.size-1,xbinsTab,ybinsTab.size-1,ybinsTab)
         #h2 = rt.TH2F(hname,htitle,xbinsTab.size-1,xbinsTab,ybinsTab.size-1,ybinsTab)
         h2 = rt.TH2F(hname,htitle,  len(xbinsTab)-1 , xbinsTab, len(ybinsTab)-1,ybinsTab)

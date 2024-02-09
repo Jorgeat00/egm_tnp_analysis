@@ -209,7 +209,7 @@ if args.sumUp:
             print astr
             fOut.write( astr + '\n' )
             
-        astr =  '%+8.3f\t%+8.3f\t%+8.3f\t%+8.3f\t%5.3f\t%5.3f\t%5.3f\t%5.3f\t%5.3f\t%5.3f\t%5.3f\t%5.3f' % (
+        astr =  '%+8.6f\t%+8.6f\t%+8.6f\t%+8.6f\t%5.6f\t%5.6f\t%5.6f\t%5.6f\t%5.6f\t%5.6f\t%5.6f\t%5.6f' % (
             float(v1Range[0]), float(v1Range[2]),
             float(v2Range[0]), float(v2Range[2]),
             effis['dataNominal'][0],effis['dataNominal'][1],
@@ -225,4 +225,4 @@ if args.sumUp:
 
     print 'Effis saved in file : ',  effFileName
     import libPython.EGammaID_scaleFactors as egm_sf
-    egm_sf.doEGM_SFs(effFileName,sampleToFit.lumi)
+    egm_sf.doEGM_SFs(effFileName,sampleToFit.lumi, axis=['vtx', 'eta']) #['pT','eta']

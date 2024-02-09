@@ -13,8 +13,10 @@ def RunTnP(listOfArguments):
   for c in commands: ex(GetCommand(c, den, tag))
   return True
 
-den = ['ttbarRun3'] 
-num = ['passtight']
+#den = ['ttbarRun3'] 
+#num = ['passtight']
+den = ['MVAid']
+num = ['passMVAIdTight', 'passMediumId', 'passMVAIdMedium'] #, 'passTightId'
 
 listInput = []
 for d in den:
@@ -32,13 +34,13 @@ commands = [
 # 'python tnpEGM_fitter.py etc/config/settings_ele_%s.py --flag %s --doFit --altBkg',
 # 'python tnpEGM_fitter.py etc/config/settings_ele_%s.py --flag %s --sumUp'
 
- 'python tnpEGM_fitter.py etc/config/settings_muo_%s.py --flag %s --createBins',
- 'python tnpEGM_fitter.py etc/config/settings_muo_%s.py --flag %s --createHists',
- 'python tnpEGM_fitter.py etc/config/settings_muo_%s.py --flag %s --doFit',
- 'python tnpEGM_fitter.py etc/config/settings_muo_%s.py --flag %s --doFit --mcSig --altSig',
- 'python tnpEGM_fitter.py etc/config/settings_muo_%s.py --flag %s --doFit --altSig',
- 'python tnpEGM_fitter.py etc/config/settings_muo_%s.py --flag %s --doFit --altBkg',
- 'python tnpEGM_fitter.py etc/config/settings_muo_%s.py --flag %s --sumUp'
+ 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --createBins',
+ 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --createHists',
+ 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit',
+ 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit --mcSig --altSig',
+ 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit --altSig',
+ 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit --altBkg',
+ 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --sumUp'
 
 # 'python tnpEGM_fitter.py etc/config/settings_muo_%s_all.py --flag %s --createBins',
 # 'python tnpEGM_fitter.py etc/config/settings_muo_%s_all.py --flag %s --createHists',
