@@ -16,7 +16,7 @@ def RunTnP(listOfArguments):
 #den = ['ttbarRun3'] 
 #num = ['passtight']
 den = ['MVAid']
-num = ['passMVAIdTight', 'passMediumId', 'passMVAIdMedium'] #, 'passTightId'
+num = ['passTightId', 'passMVAIdTight', 'passMediumId', 'passMVAIdMedium'] #, 'passTightId'
 
 listInput = []
 for d in den:

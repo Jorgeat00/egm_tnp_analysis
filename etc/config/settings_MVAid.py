@@ -25,7 +25,7 @@ flags = {
     }
 
 #baseOutDir = 'results/withData/test_rf67/eta_pu/' #eta_pt, eta_pu
-baseOutDir = 'results/withData/run3/'
+baseOutDir = 'results/withData/run3/eta_pt/'
 #############################################################
 ########## samples definition  - preparing the samples
 #############################################################
@@ -86,8 +86,8 @@ if not samplesDef['tagSel'] is None: samplesDef['tagSel'].set_weight(weightName)
 #############################################################
 biningDef = [
    { 'var' : 'abs(Probe_eta)' , 'type': 'float', 'bins': [0, 0.9, 2.4]},#[0.9, 1.2, 2.1, 2.4] },#[0,2.4]},#
-   #{ 'var' : 'Probe_pt' , 'type': 'float', 'bins': [10,20,30,40,50,60,80,120] },
-   { 'var' : 'TnP_npvsGood' , 'type': 'float', 'bins': [0,10,20,25,30,35,40,45,60] },
+   { 'var' : 'Probe_pt' , 'type': 'float', 'bins': [10,20,30,40,50,60,80,120] },
+   #{ 'var' : 'TnP_npvsGood' , 'type': 'float', 'bins': [0,10,20,25,30,35,40,45,60] },
 ]
 
 #############################################################

@@ -1,9 +1,9 @@
 import ROOT as r 
 import collections
 import math 
-wp='Medium' #'Tight', 'Medium'
-flag='../CMSSW_10_1_1/src/egm_tnp_analysis/results/withData/test_rf67/eta_pu/passMVAId%s'%wp
-flag2='../CMSSW_10_1_1/src/egm_tnp_analysis/results/withData/test_rf67/eta_pu/pass%sId'%wp
+wp='Tight' #'Tight', 'Medium'
+flag='results/withData/run3/eta_pu/passMVAId%s'%wp
+flag2='results/withData/run3/eta_pu/pass%sId'%wp
 #results=open("finalresults/TnP_ttH_muon_2018_2lss/passttH/egammaEffi.txt").readlines()
 results=open("%s/egammaEffi.txt"%flag).readlines()
 results2=open("%s/egammaEffi.txt"%flag2).readlines()
@@ -248,10 +248,10 @@ for plot in results_dict:
     leg.Draw('same')
     leg2.Draw('same')
     
-    doSpam('#scale[1.1]{#bf{CMS}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
+    doSpam('#scale[1.1]{#bf{CMS Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
     #doSpam('#scale[1.1]{#bf{CMS} #it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
     #doSpam('#scale[1.1]{#bf{CMS}} #scale[0.9]{#it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.4)
-    doSpam('59.7 fb^{-1} (13 TeV)',  0.65, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    doSpam('35.1 fb^{-1} (13.6 TeV)',  0.65, .955,0.99, .995, align=12, textSize=0.033*1.5)
     if wp=='Medium': doSpam('%s WP'%wp,  0.72, .855,0.99, .895, align=12, textSize=0.033*1.5)
     else: doSpam('%s WP'%wp,  0.77, .855,0.99, .895, align=12, textSize=0.033*1.5)
     
@@ -269,7 +269,7 @@ for plot in results_dict:
     gr_ratio2.Draw('p,EZ,same')
 
 
-    c1.SaveAs('./new_results/eff_%s_comp%s_MVA_afterAppPr_FR.png'%(plot.replace('.','p'), wp)) #prueba_pos
-    c1.SaveAs('./new_results/eff_%s_comp%s_MVA_afterAppPr_FR.pdf'%(plot.replace('.','p'), wp))
+    c1.SaveAs('./results/run3/eff_%s_comp%s_MVA_afterAppPr_FR.png'%(plot.replace('.','p'), wp)) #prueba_pos
+    c1.SaveAs('./results/run3/eff_%s_comp%s_MVA_afterAppPr_FR.pdf'%(plot.replace('.','p'), wp))
     
                             
