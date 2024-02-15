@@ -1,9 +1,9 @@
 import ROOT as r 
 import collections
 import math 
-wp='Medium' #'Tight', 'Medium'
-flag='results/withData/run3/eta_pt/passMVAId%s'%wp #test_rf67
-flag2='results/withData/run3/eta_pt/pass%sId'%wp
+wp='Tight' #'Tight', 'Medium'
+flag='./results/withData/run3/eta_pt/passMVAId%s'%wp #test_rf67
+flag2='./results/withData/test_rf67/eta_pt/passMVAId%s'%wp
 #results=open("finalresults/TnP_ttH_muon_2018_2lss/passttH/egammaEffi.txt").readlines()
 results=open("%s/egammaEffi.txt"%flag).readlines()
 results2=open("%s/egammaEffi.txt"%flag2).readlines()
@@ -270,5 +270,5 @@ for plot in results_dict:
     gr_ratio2.Draw('p,EZ,same')
 
 
-    c1.SaveAs('./results/run3/eff_%s_comp%s_MVA_afterApp_FR_2.png'%(plot.replace('.','p'), wp))
-    c1.SaveAs('./results/run3/eff_%s_comp%s_MVA_afterApp_FR_2.pdf'%(plot.replace('.','p'), wp))
+    c1.SaveAs('./results/ratio/eff_%s_comp%s_MVA_afterApp_FR_2.png'%(plot.replace('.','p'), wp))
+    c1.SaveAs('./results/ratio/eff_%s_comp%s_MVA_afterApp_FR_2.pdf'%(plot.replace('.','p'), wp))
