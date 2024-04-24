@@ -5,8 +5,8 @@ from fitUtils import *
 
 
 def histPlotter( filename, tnpBin, plotDir ):
-    print 'opening ', filename
-    print '  get canvas: ' , '%s_Canv' % tnpBin['name']
+    print ('opening ', filename)
+    print ('  get canvas: ' , '%s_Canv' % tnpBin['name'])
     rootfile = rt.TFile(filename,"read")
 
     c = rootfile.Get( '%s_Canv' % tnpBin['name'] )

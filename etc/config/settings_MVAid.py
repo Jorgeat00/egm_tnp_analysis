@@ -25,7 +25,7 @@ flags = {
     }
 
 #baseOutDir = 'results/withData/test_rf67/eta_pu/' #eta_pt, eta_pu
-baseOutDir = 'results/withData/run3/eta_pt/'
+baseOutDir = 'results/withData/run3_2023/eta_pt/'
 #############################################################
 ########## samples definition  - preparing the samples
 #############################################################

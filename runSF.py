@@ -5,7 +5,7 @@ def GetCommand(command, den, tag):
   return command%(den,tag)
 
 def ex(command):
-  print 'Executing command: ', command
+  print ('Executing command: ', command)
   os.system(command)
 
 def RunTnP(listOfArguments):
@@ -23,7 +23,7 @@ for d in den:
   for n in num:
     listInput.append([d,n])
 njobs = len(listInput)
-print 'List of inputs (%i):\n'%njobs, listInput
+print ('List of inputs (%i):\n'%njobs, listInput)
 
 commands = [
 # 'python tnpEGM_fitter.py etc/config/settings_ele_%s.py --flag %s --createBins',
@@ -34,13 +34,13 @@ commands = [
 # 'python tnpEGM_fitter.py etc/config/settings_ele_%s.py --flag %s --doFit --altBkg',
 # 'python tnpEGM_fitter.py etc/config/settings_ele_%s.py --flag %s --sumUp'
 
- 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --createBins',
- 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --createHists',
- 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit',
- 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit --mcSig --altSig',
- 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit --altSig',
- 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit --altBkg',
- 'python tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --sumUp'
+ 'python3 tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --createBins',
+ 'python3 tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --createHists',
+ 'python3 tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit',
+ 'python3 tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit --mcSig --altSig',
+ 'python3 tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit --altSig',
+ 'python3 tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --doFit --altBkg',
+ 'python3 tnpEGM_fitter.py etc/config/settings_%s.py --flag %s --sumUp'
 
 # 'python tnpEGM_fitter.py etc/config/settings_muo_%s_all.py --flag %s --createBins',
 # 'python tnpEGM_fitter.py etc/config/settings_muo_%s_all.py --flag %s --createHists',
@@ -51,10 +51,10 @@ commands = [
 # 'python tnpEGM_fitter.py etc/config/settings_muo_%s.py --flag %s --sumUp'
 ]
 if njobs == 1:
-  print 'Secuential mode...'
+  print ('Secuential mode...')
   RunTnP(listInput[0])
 else: 
-  print 'Multiprocess: calculating %i scale factors...'%njobs
+  print ('Multiprocess: calculating %i scale factors...'%njobs)
   pool = Pool(njobs)
   retlist = pool.map(RunTnP, listInput)
   pool.close()
