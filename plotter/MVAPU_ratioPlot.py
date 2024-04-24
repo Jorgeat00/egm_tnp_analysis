@@ -1,13 +1,9 @@
 import ROOT as r 
 import collections
 import math 
-import os
 wp='Medium' #'Tight', 'Medium'
-folder='full'
-#run='run3_golden'
-run='run3_2023'
-flag='results/withData/%s/%s/eta_pu/passMVAId%s'%(run,folder,wp)
-flag2='results/withData/%s/%s/eta_pu/pass%sId'%(run,folder,wp)
+flag='results/withData/run3/eta_pu/passMVAId%s'%wp
+flag2='results/withData/test_rf67/eta_pu/passMVAId%s'%wp
 #results=open("finalresults/TnP_ttH_muon_2018_2lss/passttH/egammaEffi.txt").readlines()
 results=open("%s/egammaEffi.txt"%flag).readlines()
 results2=open("%s/egammaEffi.txt"%flag2).readlines()
@@ -91,11 +87,8 @@ for plot in results_dict:
     p1.cd();
 
 
-    #frame=r.TH1F("frame","",1, 0, 60)
-    frame=r.TH1F("frame","",1, 25, 70)
-    if folder == 'full' or folder == '2022' or folder == '2022EE': frame.GetYaxis().SetRangeUser(0.955,1.01)
-    else: frame.GetYaxis().SetRangeUser(0.8,1.1)
-    if plot == '0.9-2.4' and wp == 'Tight': frame.GetYaxis().SetRangeUser(0.945,1.01)
+    frame=r.TH1F("frame","",1, 0, 60)
+    frame.GetYaxis().SetRangeUser(0.955,1.01)
     frame.GetXaxis().SetTitleFont(42)
     frame.GetXaxis().SetTitleSize(0.06)
     frame.GetXaxis().SetTitleOffset(1.1)
@@ -121,20 +114,15 @@ for plot in results_dict:
     latex.SetTextFont(42);
 
     if plot == '0.0-0.9':
-        latex.DrawLatex(56.,1.003,"Muon |#eta| < 0.9");#56 if the axis begin in 25, 48 otherwise
+        latex.DrawLatex(40.,1.002,"Muon |#eta| < 0.9");
     elif plot == '0.9-2.4':
-        #latex.DrawLatex(40.,1.002,"Muon |#eta| > 0.9");
-        latex.DrawLatex(56.,1.002,"Muon |#eta| > 0.9");
+        latex.DrawLatex(40.,1.002,"Muon |#eta| > 0.9");
     p2.cd();
-    #frameratio=r.TH1F("ratioframe","",1, 0, 60)
-    frameratio=r.TH1F("ratioframe","",1, 25, 70)
+    frameratio=r.TH1F("ratioframe","",1, 0, 60)
     frameratio.GetXaxis().SetTitle("Number of vertices")
     frameratio.SetBinError(1,0)
     frameratio.SetBinContent(1,1)
-    #frameratio.GetYaxis().SetRangeUser(0.98,1.02)
-    frameratio.GetYaxis().SetRangeUser(0.94,1.06)
-    #if plot == '0.9-2.4' and wp == 'Tight': frameratio.GetYaxis().SetRangeUser(0.96,1.04)
-    if plot == '0.9-2.4': frameratio.GetYaxis().SetRangeUser(0.96,1.04)
+    frameratio.GetYaxis().SetRangeUser(0.98,1.02)
     frameratio.GetXaxis().SetTitleFont(42)
     frameratio.GetXaxis().SetTitleSize(0.14)
     frameratio.GetXaxis().SetTitleOffset(1.0)
@@ -151,7 +139,7 @@ for plot in results_dict:
     frameratio.GetYaxis().SetLabelSize(0.12)#0.14)
     frameratio.GetYaxis().SetLabelOffset(0.01)
     frameratio.GetYaxis().SetDecimals(True) 
-    frameratio.GetYaxis().SetTitle("Data/MC")
+    frameratio.GetYaxis().SetTitle("Run3/Run2")
     frame.GetXaxis().SetLabelOffset(999) ## send them away
     frame.GetXaxis().SetTitleOffset(999) ## in outer space
     frame.GetYaxis().SetTitleSize(0.06)
@@ -160,7 +148,7 @@ for plot in results_dict:
     frame.GetYaxis().SetLabelSize(0.05)
     frame.GetYaxis().SetLabelOffset(0.007)
     leg=r.TLegend(0.45,0.03,0.94,0.23)
-    if wp=='Tight': leg=r.TLegend(0.2,0.770,0.65,0.935)#0.895
+    #if wp=='Tight': leg=r.TLegend(0.2,0.795,0.65,0.895)
     leg.SetLineColor(0)
     leg.SetFillColor(0)
     leg.SetShadowColor(0)
@@ -169,7 +157,7 @@ for plot in results_dict:
     leg.SetFillStyle(0)
     leg.SetLineStyle(0)
     leg2=r.TLegend(0.45,0.03,0.94,0.23)
-    if wp=='Tight': leg2=r.TLegend(0.2,0.770,0.65,0.935)
+    #if wp=='Tight': leg2=r.TLegend(0.2,0.795,0.65,0.895)
     leg2.SetLineColor(0)
     leg2.SetFillStyle(0)
     leg2.SetLineStyle(0)
@@ -202,9 +190,9 @@ for plot in results_dict:
         gr_mc3  . SetPointError(point, (-pt1+pt2)/2, results_dict2[plot][point][5])
 
         if eff_mc:
-            gr_ratio.SetPoint( point, (pt1+pt2)/2, eff_data/eff_mc)
+            gr_ratio.SetPoint( point, (pt1+pt2)/2, eff_data/results_dict2[plot][point][2])
             gr_ratio.SetPointError(point, (-pt1+pt2)/2, hypot( eff_data_err/eff_mc, eff_mc_err * eff_data /eff_mc**2))
-            gr_ratio2.SetPoint( point, (pt1+pt2)/2, results_dict2[plot][point][2]/results_dict2[plot][point][4])
+            gr_ratio2.SetPoint( point, (pt1+pt2)/2, eff_mc/results_dict2[plot][point][4])
             gr_ratio2.SetPointError(point, (-pt1+pt2)/2, hypot( results_dict2[plot][point][3]/results_dict2[plot][point][4], results_dict2[plot][point][5] * results_dict2[plot][point][2] /results_dict2[plot][point][4]**2))
 
         else:
@@ -221,17 +209,17 @@ for plot in results_dict:
     gr_mc.SetLineColor(r.kBlue)
     #gr_mc.SetLineColor(r.kMagenta)
     gr_mc.SetMarkerColor(r.kBlue)
-    gr_mc.SetMarkerStyle(24)
+    gr_mc.SetMarkerStyle(20)
     gr_mc.SetMarkerSize(1.5)
-    gr_mc2.SetLineColor(r.kRed)
+    gr_mc2.SetLineColor(r.kBlue)
     #gr_mc2.SetLineWidth(2)
-    gr_mc2.SetMarkerColor(r.kRed)
-    gr_mc2.SetMarkerStyle(26)
+    gr_mc2.SetMarkerColor(r.kBlue)
+    gr_mc2.SetMarkerStyle(24)
     gr_mc2.SetMarkerSize(1.5)
 
-    gr_mc3.SetLineColor(r.kRed)
+    gr_mc3.SetLineColor(r.kBlue)
     gr_mc3.SetMarkerColor(r.kWhite)
-    gr_mc3.SetMarkerStyle(22)
+    gr_mc3.SetMarkerStyle(24)
     gr_mc3.SetMarkerSize(1.4)
     gr_mc3.Draw("p,EZ,same")
     gr_mc4.SetLineColor(r.kBlue)
@@ -239,19 +227,19 @@ for plot in results_dict:
     gr_mc4.SetMarkerSize(1.4)
     gr_mc4.Draw("p,EZ,same")
     
-    gr_data.SetLineColor(r.kBlue)
-    gr_data.SetMarkerColor(r.kBlue)
-    gr_data.SetMarkerStyle(20)
+    gr_data.SetLineColor(r.kRed)
+    gr_data.SetMarkerColor(r.kRed)
+    gr_data.SetMarkerStyle(21)
     gr_data.SetMarkerSize(1.5)
     gr_data2.SetLineColor(r.kRed)
     gr_data2.SetMarkerColor(r.kRed)
-    gr_data2.SetMarkerStyle(22)
+    gr_data2.SetMarkerStyle(25)
     gr_data2.SetMarkerSize(1.5)
 
-    leg.AddEntry(gr_mc  , 'Muon MVA ID - MC',"lep")
-    leg.AddEntry(gr_data, 'Muon MVA ID - Data','lep')
-    leg.AddEntry(gr_mc2  , 'Cut-based ID - MC',"lep")
-    leg.AddEntry(gr_data2, 'Cut-based ID - Data','lep')
+    leg.AddEntry(gr_mc  , 'MVA ID Run3 - MC',"lep")
+    leg.AddEntry(gr_data, 'MVA ID Run3 - Data','lep')
+    leg.AddEntry(gr_mc2  , 'MVA ID Run2- MC',"lep")
+    leg.AddEntry(gr_data2, 'MVA ID Run2- Data','lep')
     leg.Draw('same')
     leg2.AddEntry(gr_mc4  , ' ',"lep")
     leg2.AddEntry(gr_data, ' ','')
@@ -263,34 +251,26 @@ for plot in results_dict:
     #doSpam('#scale[1.1]{#bf{CMS Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
     #doSpam('#scale[1.1]{#bf{CMS} #it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
     doSpam('#scale[1.1]{#bf{CMS}} #scale[0.9]{#it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.4)
-    if '2022' == folder.split("_")[-1]: doSpam('7.97 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
-    elif '2022EE' == folder.split("_")[-1]: doSpam('26.3 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
-    else: doSpam('34.3 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)#35.1, 8.62, 26.92 #new 34.3 26.3 7.97
-    if wp=='Medium': doSpam('%s WP'%wp,  0.72, .885,0.99, .915, align=12, textSize=0.033*1.5)
-    #else: doSpam('%s WP'%wp,  0.77, .855,0.99, .895, align=12, textSize=0.033*1.5)
-    else: doSpam('%s WP'%wp,  0.77, .885,0.99, .915, align=12, textSize=0.033*1.5)    
-
+    doSpam('35.1 fb^{-1} (13.6 TeV)',  0.65, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    if wp=='Medium': doSpam('%s WP'%wp,  0.72, .855,0.99, .895, align=12, textSize=0.033*1.5)
+    else: doSpam('%s WP'%wp,  0.77, .855,0.99, .895, align=12, textSize=0.033*1.5)
+    
     p2.cd()
     
-    gr_ratio.SetLineColor(r.kBlue)
-    gr_ratio.SetMarkerColor(r.kBlue)
-    gr_ratio.SetMarkerStyle(20)
+    gr_ratio.SetLineColor(r.kRed)
+    gr_ratio.SetMarkerColor(r.kRed)
+    gr_ratio.SetMarkerStyle(21)
     gr_ratio.SetMarkerSize(1.5)
-    gr_ratio2.SetLineColor(r.kRed)
-    gr_ratio2.SetMarkerColor(r.kRed)
-    gr_ratio2.SetMarkerStyle(22)
+    gr_ratio2.SetLineColor(r.kBlue)
+    gr_ratio2.SetMarkerColor(r.kBlue)
+    gr_ratio2.SetMarkerStyle(20)
     gr_ratio2.SetMarkerSize(1.5)
     gr_ratio.Draw('p,EZ,same')
     gr_ratio2.Draw('p,EZ,same')
-    if not os.path.exists('./results/%s/%s/'%(run,folder)):
-       os.makedirs('./results/%s/%s/'%(run,folder))
-       os.makedirs('/eos/user/j/jayllont/www/%s/%s/'%(run,folder))
-       os.system('cp /eos/user/j/jayllont/www/index.php /eos/user/j/jayllont/www/%s/%s/'%(run,folder))
-    #c1.SaveAs('./results/run3/full_eta/eff_%s_comp%s_MVA_afterAppPr_FR.png'%(plot.replace('.','p'), wp)) #prueba_pos
-    #c1.SaveAs('./results/run3/2022/eff_%s_comp%s_MVA_afterAppPr_FR.pdf'%(plot.replace('.','p'), wp))
-    c1.SaveAs('./results/%s/%s/eff_%s_comp%s_MVA_PU.png'%(run,folder,plot.replace('.','p'), wp))
-    c1.SaveAs('/eos/user/j/jayllont/www/%s/%s/eff_%s_comp%s_MVA_PU.png'%(run,folder,plot.replace('.','p'), wp))
-    c1.SaveAs('./results/%s/%s/eff_%s_comp%s_MVA_PU.pdf'%(run,folder,plot.replace('.','p'), wp))
 
+
+    c1.SaveAs('./results/ratio/ratio_effPU_%s_comp%s.png'%(plot.replace('.','p'), wp)) #prueba_pos
+    c1.SaveAs('/eos/user/j/jayllont/www/run3/ratio/ratio_effPU_%s_comp%s.png'%(plot.replace('.','p'), wp))
+    c1.SaveAs('./results/ratio/ratio_effPU_%s_comp%s.pdf'%(plot.replace('.','p'), wp))
     
                             

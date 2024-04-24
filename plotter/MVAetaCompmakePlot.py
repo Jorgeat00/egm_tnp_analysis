@@ -1,13 +1,11 @@
 import ROOT as r 
 import collections
-import math 
-import os
+import math
+import os 
 wp='Medium' #'Tight', 'Medium'
-folder='full'
-#run='run3_golden'
-run='run3_2023'
-flag='results/withData/%s/%s/eta_pu/passMVAId%s'%(run,folder,wp)
-flag2='results/withData/%s/%s/eta_pu/pass%sId'%(run,folder,wp)
+folder='bins_eta'
+flag='results/withData/run3_golden/%s/eta_pu/passMVAId%s'%(folder,wp) #test_rf67
+flag2='results/withData/run3_golden/%s/eta_pu/pass%sId'%(folder,wp)
 #results=open("finalresults/TnP_ttH_muon_2018_2lss/passttH/egammaEffi.txt").readlines()
 results=open("%s/egammaEffi.txt"%flag).readlines()
 results2=open("%s/egammaEffi.txt"%flag2).readlines()
@@ -50,7 +48,7 @@ for lin in results:
     eff_mc = float(fields[6])
     eff_mc_err = float(fields[7])
 
-    results_dict[('%2.1f-%2.1f'%(eta1, eta2))].append( (pt1, pt2, eff_data, eff_data_err, eff_mc, eff_mc_err))
+    results_dict[('%2.1f-%2.1f'%(pt1, pt2))].append( (eta1, eta2, eff_data, eff_data_err, eff_mc, eff_mc_err))
 
 for lin in results2:
     fields= lin.rstrip().split()
@@ -64,13 +62,13 @@ for lin in results2:
     eff_mc = float(fields[6])
     eff_mc_err = float(fields[7])
 
-    results_dict2[('%2.1f-%2.1f'%(eta1, eta2))].append( (pt1, pt2, eff_data, eff_data_err, eff_mc, eff_mc_err))
+    results_dict2[('%2.1f-%2.1f'%(pt1, pt2))].append( (eta1, eta2, eff_data, eff_data_err, eff_mc, eff_mc_err))
 
 
 for plot in results_dict:
     tokeep=[]
     topSpamSize=1.2
-    plotformat = (600,600) 
+    plotformat = (600,600)
     height = plotformat[1]+150
     c1 = r.TCanvas("_canvas", '', plotformat[0], height)
     c1.SetWindowSize(plotformat[0] + (plotformat[0] - c1.GetWw()), (plotformat[1]+150 + (plotformat[1]+150 - c1.GetWh())));
@@ -80,6 +78,7 @@ for plot in results_dict:
     p1.SetTopMargin(0.05);
     p1.SetLeftMargin(0.17)
     p1.SetRightMargin(0.05)
+    #p1.SetLogy()
     p1.Draw();
     p2 = r.TPad("pad2","pad2",0,0,1,0.3);
     p2.SetTopMargin(p1.GetTopMargin()*topSpamSize)
@@ -91,11 +90,8 @@ for plot in results_dict:
     p1.cd();
 
 
-    #frame=r.TH1F("frame","",1, 0, 60)
-    frame=r.TH1F("frame","",1, 25, 70)
-    if folder == 'full' or folder == '2022' or folder == '2022EE': frame.GetYaxis().SetRangeUser(0.955,1.01)
-    else: frame.GetYaxis().SetRangeUser(0.8,1.1)
-    if plot == '0.9-2.4' and wp == 'Tight': frame.GetYaxis().SetRangeUser(0.945,1.01)
+    frame=r.TH1F("frame","",1, -2.4, 2.4)
+    frame.GetYaxis().SetRangeUser(0.8,1.1)
     frame.GetXaxis().SetTitleFont(42)
     frame.GetXaxis().SetTitleSize(0.06)
     frame.GetXaxis().SetTitleOffset(1.1)
@@ -109,7 +105,7 @@ for plot in results_dict:
     frame.GetYaxis().SetLabelSize(0.12)
     frame.GetYaxis().SetLabelOffset(0.007)
     frame.GetYaxis().SetTitle("Efficiency")
-    frame.GetXaxis().SetTitle("Number of vertices")
+    frame.GetXaxis().SetTitle("Muon #it{p}_{T} (GeV)")
     frame.GetXaxis().SetNdivisions(510)
     frame.GetYaxis().SetNdivisions(510)
     #frame.GetYaxis().SetNdivisions(2*1000000 + (510%1000000))
@@ -117,24 +113,24 @@ for plot in results_dict:
     frame.Draw()
 
     latex=r.TLatex()
-    latex.SetTextSize(0.033*1.4);
+    latex.SetTextSize(0.033*1.5);
     latex.SetTextFont(42);
 
     if plot == '0.0-0.9':
-        latex.DrawLatex(56.,1.003,"Muon |#eta| < 0.9");#56 if the axis begin in 25, 48 otherwise
+        latex.DrawLatex(84.,1.002,"Muon |#eta| < 0.9");
+        #latex.DrawLatex(84.,0.998,"Muon |#eta| < 0.9");
     elif plot == '0.9-2.4':
-        #latex.DrawLatex(40.,1.002,"Muon |#eta| > 0.9");
-        latex.DrawLatex(56.,1.002,"Muon |#eta| > 0.9");
+        latex.DrawLatex(84.,1.002,"Muon |#eta| > 0.9");
+        #latex.DrawLatex(84.,0.998,"Muon |#eta| > 0.9");
+
     p2.cd();
-    #frameratio=r.TH1F("ratioframe","",1, 0, 60)
-    frameratio=r.TH1F("ratioframe","",1, 25, 70)
-    frameratio.GetXaxis().SetTitle("Number of vertices")
+    frameratio=r.TH1F("ratioframe","",1, -2.4, 2.4)
+    #frameratio.GetXaxis().SetTitle("Muon #it{p}_{T} (GeV)")
+    frameratio.GetXaxis().SetTitle("Muon #eta")
     frameratio.SetBinError(1,0)
     frameratio.SetBinContent(1,1)
-    #frameratio.GetYaxis().SetRangeUser(0.98,1.02)
     frameratio.GetYaxis().SetRangeUser(0.94,1.06)
-    #if plot == '0.9-2.4' and wp == 'Tight': frameratio.GetYaxis().SetRangeUser(0.96,1.04)
-    if plot == '0.9-2.4': frameratio.GetYaxis().SetRangeUser(0.96,1.04)
+    if plot == '0.9-2.4' and wp=='Tight': frameratio.GetYaxis().SetRangeUser(0.96,1.04)
     frameratio.GetXaxis().SetTitleFont(42)
     frameratio.GetXaxis().SetTitleSize(0.14)
     frameratio.GetXaxis().SetTitleOffset(1.0)
@@ -144,7 +140,6 @@ for plot in results_dict:
     frameratio.GetYaxis().SetNdivisions(502)
     frameratio.GetYaxis().SetTitleFont(42)
     frameratio.GetYaxis().SetTitleSize(0.14)
-    #offset = 0.62
     offset = 0.62
     frameratio.GetYaxis().SetTitleOffset(offset)
     frameratio.GetYaxis().SetLabelFont(42)
@@ -159,8 +154,8 @@ for plot in results_dict:
     frame.GetYaxis().SetTitleOffset(1.35)
     frame.GetYaxis().SetLabelSize(0.05)
     frame.GetYaxis().SetLabelOffset(0.007)
-    leg=r.TLegend(0.45,0.03,0.94,0.23)
-    if wp=='Tight': leg=r.TLegend(0.2,0.770,0.65,0.935)#0.895
+    leg=r.TLegend(0.45,0.03,0.93,0.23)
+    if wp=='Tight': leg=r.TLegend(0.2,0.710,0.65,0.910)
     leg.SetLineColor(0)
     leg.SetFillColor(0)
     leg.SetShadowColor(0)
@@ -168,8 +163,9 @@ for plot in results_dict:
     leg.SetTextSize(0.05)#45)
     leg.SetFillStyle(0)
     leg.SetLineStyle(0)
-    leg2=r.TLegend(0.45,0.03,0.94,0.23)
-    if wp=='Tight': leg2=r.TLegend(0.2,0.770,0.65,0.935)
+    leg2=r.TLegend(0.45,0.03,0.93,0.23)
+    #if wp=='Tight': leg2=r.TLegend(0.2,0.695,0.65,0.895)
+    if wp=='Tight': leg2=r.TLegend(0.2,0.710,0.65,0.910)
     leg2.SetLineColor(0)
     leg2.SetFillStyle(0)
     leg2.SetLineStyle(0)
@@ -219,7 +215,6 @@ for plot in results_dict:
     gr_data2.Draw("p,EZ,same")
     gr_mc2.Draw("p,EZ,same")
     gr_mc.SetLineColor(r.kBlue)
-    #gr_mc.SetLineColor(r.kMagenta)
     gr_mc.SetMarkerColor(r.kBlue)
     gr_mc.SetMarkerStyle(24)
     gr_mc.SetMarkerSize(1.5)
@@ -259,17 +254,15 @@ for plot in results_dict:
     leg2.AddEntry(gr_data2, ' ','')
     leg.Draw('same')
     leg2.Draw('same')
-    
-    #doSpam('#scale[1.1]{#bf{CMS Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
-    #doSpam('#scale[1.1]{#bf{CMS} #it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
-    doSpam('#scale[1.1]{#bf{CMS}} #scale[0.9]{#it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.4)
-    if '2022' == folder.split("_")[-1]: doSpam('7.97 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
-    elif '2022EE' == folder.split("_")[-1]: doSpam('26.3 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
-    else: doSpam('34.3 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)#35.1, 8.62, 26.92 #new 34.3 26.3 7.97
-    if wp=='Medium': doSpam('%s WP'%wp,  0.72, .885,0.99, .915, align=12, textSize=0.033*1.5)
-    #else: doSpam('%s WP'%wp,  0.77, .855,0.99, .895, align=12, textSize=0.033*1.5)
-    else: doSpam('%s WP'%wp,  0.77, .885,0.99, .915, align=12, textSize=0.033*1.5)    
 
+    #doSpam('#scale[1.1]{#bf{CMS Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
+    doSpam('#scale[1.1]{#bf{CMS}} #scale[0.9]{#it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.4)
+    if folder=='2022': doSpam('8.6 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    elif folder=='2022EE': doSpam('26.9 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    else: doSpam('35.1 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    if wp=='Medium': doSpam('%s WP'%wp,  0.72, .855,0.99, .895, align=12, textSize=0.033*1.5)
+    else: doSpam('%s WP'%wp,  0.77, .855,0.99, .895, align=12, textSize=0.033*1.5)
+    
     p2.cd()
     
     gr_ratio.SetLineColor(r.kBlue)
@@ -278,19 +271,16 @@ for plot in results_dict:
     gr_ratio.SetMarkerSize(1.5)
     gr_ratio2.SetLineColor(r.kRed)
     gr_ratio2.SetMarkerColor(r.kRed)
-    gr_ratio2.SetMarkerStyle(22)
+    gr_ratio2.SetMarkerStyle(20)
     gr_ratio2.SetMarkerSize(1.5)
     gr_ratio.Draw('p,EZ,same')
     gr_ratio2.Draw('p,EZ,same')
-    if not os.path.exists('./results/%s/%s/'%(run,folder)):
-       os.makedirs('./results/%s/%s/'%(run,folder))
-       os.makedirs('/eos/user/j/jayllont/www/%s/%s/'%(run,folder))
-       os.system('cp /eos/user/j/jayllont/www/index.php /eos/user/j/jayllont/www/%s/%s/'%(run,folder))
-    #c1.SaveAs('./results/run3/full_eta/eff_%s_comp%s_MVA_afterAppPr_FR.png'%(plot.replace('.','p'), wp)) #prueba_pos
-    #c1.SaveAs('./results/run3/2022/eff_%s_comp%s_MVA_afterAppPr_FR.pdf'%(plot.replace('.','p'), wp))
-    c1.SaveAs('./results/%s/%s/eff_%s_comp%s_MVA_PU.png'%(run,folder,plot.replace('.','p'), wp))
-    c1.SaveAs('/eos/user/j/jayllont/www/%s/%s/eff_%s_comp%s_MVA_PU.png'%(run,folder,plot.replace('.','p'), wp))
-    c1.SaveAs('./results/%s/%s/eff_%s_comp%s_MVA_PU.pdf'%(run,folder,plot.replace('.','p'), wp))
+    if not os.path.exists('./results/run3_golden/%s/'%(folder)):
+       os.makedirs('./results/run3_golden/%s/'%(folder))
+       os.makedirs('/eos/user/j/jayllont/www/run3_golden/%s/'%(folder))
+    #c1.SaveAs('./results/run3/eff_eta/eff_%s_comp%s_MVA_afterApp_FR_2.png'%(plot.replace('.','p'), wp))
+    #c1.SaveAs('./results/run3/2022/eff_%s_comp%s_MVA_afterApp_FR_2.pdf'%(plot.replace('.','p'), wp))
+    c1.SaveAs('./results/run3_golden/%s/eff_%s_comp%s_MVA_eta.png'%(folder,plot.replace('.','p'), wp))
+    c1.SaveAs('/eos/user/j/jayllont/www/run3_golden/%s/eff_%s_comp%s_MVA_eta.png'%(folder,plot.replace('.','p'), wp))
+    c1.SaveAs('./results/run3_golden/%s/eff_%s_comp%s_MVA_eta.pdf'%(folder,plot.replace('.','p'), wp))
 
-    
-                            

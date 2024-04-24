@@ -1,9 +1,11 @@
 import ROOT as r 
 import collections
 import math 
-wp='Medium' #'Tight', 'Medium'
-flag='results/withData/run3/eta_pt/passMVAId%s'%wp #test_rf67
-flag2='results/withData/run3/eta_pt/pass%sId'%wp
+import os
+wp='Tight' #'Tight', 'Medium'
+folder='2022EE'
+flag='results/withData/run3_golden/%s/eta_pt/passMVAId%s'%(folder,wp) #test_rf67
+flag2='results/withData/run3_golden/%s/eta_pt/pass%sId'%(folder,wp)
 #results=open("finalresults/TnP_ttH_muon_2018_2lss/passttH/egammaEffi.txt").readlines()
 results=open("%s/egammaEffi.txt"%flag).readlines()
 results2=open("%s/egammaEffi.txt"%flag2).readlines()
@@ -127,6 +129,7 @@ for plot in results_dict:
     frameratio.SetBinError(1,0)
     frameratio.SetBinContent(1,1)
     frameratio.GetYaxis().SetRangeUser(0.98,1.02)
+    if plot == '0.9-2.4' and wp=='Tight': frameratio.GetYaxis().SetRangeUser(0.96,1.04)
     frameratio.GetXaxis().SetTitleFont(42)
     frameratio.GetXaxis().SetTitleSize(0.14)
     frameratio.GetXaxis().SetTitleOffset(1.0)
@@ -151,7 +154,7 @@ for plot in results_dict:
     frame.GetYaxis().SetLabelSize(0.05)
     frame.GetYaxis().SetLabelOffset(0.007)
     leg=r.TLegend(0.45,0.03,0.93,0.23)
-    #if wp=='Tight': leg=r.TLegend(0.2,0.695,0.65,0.895)
+    if wp=='Tight': leg=r.TLegend(0.2,0.710,0.65,0.910)
     leg.SetLineColor(0)
     leg.SetFillColor(0)
     leg.SetShadowColor(0)
@@ -161,6 +164,7 @@ for plot in results_dict:
     leg.SetLineStyle(0)
     leg2=r.TLegend(0.45,0.03,0.93,0.23)
     #if wp=='Tight': leg2=r.TLegend(0.2,0.695,0.65,0.895)
+    if wp=='Tight': leg2=r.TLegend(0.2,0.710,0.65,0.910)
     leg2.SetLineColor(0)
     leg2.SetFillStyle(0)
     leg2.SetLineStyle(0)
@@ -250,9 +254,11 @@ for plot in results_dict:
     leg.Draw('same')
     leg2.Draw('same')
 
-    doSpam('#scale[1.1]{#bf{CMS Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
-    #doSpam('#scale[1.1]{#bf{CMS}} #scale[0.9]{#it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.4)
-    doSpam('35.1 fb^{-1} (13.6 TeV)',  0.65, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    #doSpam('#scale[1.1]{#bf{CMS Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
+    doSpam('#scale[1.1]{#bf{CMS}} #scale[0.9]{#it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.4)
+    if folder=='2022': doSpam('7.97 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    elif folder=='2022EE': doSpam('26.3 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    else: doSpam('34.3 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
     if wp=='Medium': doSpam('%s WP'%wp,  0.72, .855,0.99, .895, align=12, textSize=0.033*1.5)
     else: doSpam('%s WP'%wp,  0.77, .855,0.99, .895, align=12, textSize=0.033*1.5)
     
@@ -264,11 +270,16 @@ for plot in results_dict:
     gr_ratio.SetMarkerSize(1.5)
     gr_ratio2.SetLineColor(r.kRed)
     gr_ratio2.SetMarkerColor(r.kRed)
-    #gr_ratio2.SetMarkerStyle(22)
+    gr_ratio2.SetMarkerStyle(20)
     gr_ratio2.SetMarkerSize(1.5)
     gr_ratio.Draw('p,EZ,same')
     gr_ratio2.Draw('p,EZ,same')
+    if not os.path.exists('./results/run3_golden/%s/'%(folder)):
+       os.makedirs('./results/run3_golden/%s/'%(folder))
+       os.makedirs('/eos/user/j/jayllont/www/run3_golden/%s/'%(folder))
+    #c1.SaveAs('./results/run3/2022/eff_%s_comp%s_MVA_afterApp_FR_2.png'%(plot.replace('.','p'), wp))
+    #c1.SaveAs('./results/run3/2022/eff_%s_comp%s_MVA_afterApp_FR_2.pdf'%(plot.replace('.','p'), wp))
+    c1.SaveAs('./results/run3_golden/%s/eff_%s_comp%s_MVA_pt.png'%(folder,plot.replace('.','p'), wp))
+    c1.SaveAs('/eos/user/j/jayllont/www/run3_golden/%s/eff_%s_comp%s_MVA_pt.png'%(folder,plot.replace('.','p'), wp))
+    c1.SaveAs('./results/run3_golden/%s/eff_%s_comp%s_MVA_pt.pdf'%(folder,plot.replace('.','p'), wp))
 
-
-    c1.SaveAs('./results/run3/eff_%s_comp%s_MVA_afterApp_FR_2.png'%(plot.replace('.','p'), wp))
-    c1.SaveAs('./results/run3/eff_%s_comp%s_MVA_afterApp_FR_2.pdf'%(plot.replace('.','p'), wp))

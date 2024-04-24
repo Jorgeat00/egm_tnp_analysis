@@ -1,8 +1,10 @@
 import ROOT as r 
 import collections
 import math 
-wp='Tight' #'Tight', 'Medium'
-flag='./results/withData/run3/eta_pt/passMVAId%s'%wp #test_rf67
+import os
+
+wp='Medium' #'Tight', 'Medium'
+flag='./results/withData/run3_golden/full/eta_pt/passMVAId%s'%wp #test_rf67
 flag2='./results/withData/test_rf67/eta_pt/passMVAId%s'%wp
 #results=open("finalresults/TnP_ttH_muon_2018_2lss/passttH/egammaEffi.txt").readlines()
 results=open("%s/egammaEffi.txt"%flag).readlines()
@@ -142,7 +144,7 @@ for plot in results_dict:
     frameratio.GetYaxis().SetLabelSize(0.12)#0.14)
     frameratio.GetYaxis().SetLabelOffset(0.01)
     frameratio.GetYaxis().SetDecimals(True) 
-    frameratio.GetYaxis().SetTitle("Data/MC")
+    frameratio.GetYaxis().SetTitle("Run3/Run2")
     frame.GetXaxis().SetLabelOffset(999) ## send them away
     frame.GetXaxis().SetTitleOffset(999) ## in outer space
     frame.GetYaxis().SetTitleSize(0.06)
@@ -193,9 +195,9 @@ for plot in results_dict:
         gr_mc3  . SetPointError(point, (-pt1+pt2)/2, results_dict2[plot][point][5])
 
         if eff_mc:
-            gr_ratio.SetPoint( point, (pt1+pt2)/2, eff_data/eff_mc)
+            gr_ratio.SetPoint( point, (pt1+pt2)/2,eff_data/results_dict2[plot][point][2])
             gr_ratio.SetPointError(point, (-pt1+pt2)/2, hypot( eff_data_err/eff_mc, eff_mc_err * eff_data /eff_mc**2))
-            gr_ratio2.SetPoint( point, (pt1+pt2)/2, results_dict2[plot][point][2]/results_dict2[plot][point][4])
+            gr_ratio2.SetPoint( point, (pt1+pt2)/2, eff_mc/results_dict2[plot][point][4])
             gr_ratio2.SetPointError(point, (-pt1+pt2)/2, hypot( results_dict2[plot][point][3]/results_dict2[plot][point][4], results_dict2[plot][point][5] * results_dict2[plot][point][2] /results_dict2[plot][point][4]**2))
 
         else:
@@ -211,17 +213,17 @@ for plot in results_dict:
     gr_mc2.Draw("p,EZ,same")
     gr_mc.SetLineColor(r.kBlue)
     gr_mc.SetMarkerColor(r.kBlue)
-    gr_mc.SetMarkerStyle(24)
+    gr_mc.SetMarkerStyle(20)
     gr_mc.SetMarkerSize(1.5)
-    gr_mc2.SetLineColor(r.kRed)
+    gr_mc2.SetLineColor(r.kBlue)
     #gr_mc2.SetLineWidth(2)
-    gr_mc2.SetMarkerColor(r.kRed)
-    gr_mc2.SetMarkerStyle(26)
+    gr_mc2.SetMarkerColor(r.kBlue)
+    gr_mc2.SetMarkerStyle(24)
     gr_mc2.SetMarkerSize(1.5)
 
-    gr_mc3.SetLineColor(r.kRed)
+    gr_mc3.SetLineColor(r.kBlue)
     gr_mc3.SetMarkerColor(r.kWhite)
-    gr_mc3.SetMarkerStyle(22)
+    gr_mc3.SetMarkerStyle(24)
     gr_mc3.SetMarkerSize(1.4)
     gr_mc3.Draw("p,EZ,same")
     gr_mc4.SetLineColor(r.kBlue)
@@ -229,19 +231,19 @@ for plot in results_dict:
     gr_mc4.SetMarkerSize(1.4)
     gr_mc4.Draw("p,EZ,same")
     
-    gr_data.SetLineColor(r.kBlue)
-    gr_data.SetMarkerColor(r.kBlue)
-    gr_data.SetMarkerStyle(20)
+    gr_data.SetLineColor(r.kRed)
+    gr_data.SetMarkerColor(r.kRed)
+    gr_data.SetMarkerStyle(21)
     gr_data.SetMarkerSize(1.5)
     gr_data2.SetLineColor(r.kRed)
     gr_data2.SetMarkerColor(r.kRed)
-    gr_data2.SetMarkerStyle(22)
+    gr_data2.SetMarkerStyle(25)
     gr_data2.SetMarkerSize(1.5)
 
-    leg.AddEntry(gr_mc  , 'Muon MVA ID - MC',"lep")
-    leg.AddEntry(gr_data, 'Muon MVA ID - Data','lep')
-    leg.AddEntry(gr_mc2  , 'Cut-based ID - MC',"lep")
-    leg.AddEntry(gr_data2, 'Cut-based ID - Data','lep')
+    leg.AddEntry(gr_mc  , 'MVA ID Run3 - MC',"lep")
+    leg.AddEntry(gr_data, 'MVA ID Run3 - Data','lep')
+    leg.AddEntry(gr_mc2  , 'MVA ID Run2 - MC',"lep")
+    leg.AddEntry(gr_data2, 'MVA ID Run2 - Data','lep')
     leg.Draw('same')
     leg2.AddEntry(gr_mc4  , ' ',"lep")
     leg2.AddEntry(gr_data, ' ','')
@@ -250,25 +252,29 @@ for plot in results_dict:
     leg.Draw('same')
     leg2.Draw('same')
 
-    doSpam('#scale[1.1]{#bf{CMS Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
-    #doSpam('#scale[1.1]{#bf{CMS}} #scale[0.9]{#it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.4)
-    doSpam('35.1 fb^{-1} (13.6 TeV)',  0.65, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    #doSpam('#scale[1.1]{#bf{CMS Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.5)
+    doSpam('#scale[1.1]{#bf{CMS}} #scale[0.9]{#it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.4)
+    doSpam('34.3 fb^{-1} (13.6 TeV)',  0.65, .955,0.99, .995, align=12, textSize=0.033*1.5)
     if wp=='Medium': doSpam('%s WP'%wp,  0.72, .855,0.99, .895, align=12, textSize=0.033*1.5)
     else: doSpam('%s WP'%wp,  0.77, .855,0.99, .895, align=12, textSize=0.033*1.5)
     
     p2.cd()
     
-    gr_ratio.SetLineColor(r.kBlue)
-    gr_ratio.SetMarkerColor(r.kBlue)
-    gr_ratio.SetMarkerStyle(20)
+    gr_ratio.SetLineColor(r.kRed)
+    gr_ratio.SetMarkerColor(r.kRed)
+    gr_ratio.SetMarkerStyle(21)
     gr_ratio.SetMarkerSize(1.5)
-    gr_ratio2.SetLineColor(r.kRed)
-    gr_ratio2.SetMarkerColor(r.kRed)
-    #gr_ratio2.SetMarkerStyle(22)
+    gr_ratio2.SetLineColor(r.kBlue)
+    gr_ratio2.SetMarkerColor(r.kBlue)
+    gr_ratio2.SetMarkerStyle(20)
     gr_ratio2.SetMarkerSize(1.5)
     gr_ratio.Draw('p,EZ,same')
     gr_ratio2.Draw('p,EZ,same')
 
+    if not os.path.exists('./results/ratio_golden/'):
+        os.makedirs('./results/ratio_golden/')
+        os.makedirs('/eos/user/j/jayllont/www/run3_golden/ratio/')
 
-    c1.SaveAs('./results/ratio/eff_%s_comp%s_MVA_afterApp_FR_2.png'%(plot.replace('.','p'), wp))
-    c1.SaveAs('./results/ratio/eff_%s_comp%s_MVA_afterApp_FR_2.pdf'%(plot.replace('.','p'), wp))
+    c1.SaveAs('./results/ratio_golden/ratio_eff_%s_comp%s.png'%(plot.replace('.','p'), wp))
+    c1.SaveAs('/eos/user/j/jayllont/www/run3_golden/ratio/ratio_eff_%s_comp%s.png'%(plot.replace('.','p'), wp))
+    c1.SaveAs('./results/ratio_golden/ratio_eff_%s_comp%s.pdf'%(plot.replace('.','p'), wp))
