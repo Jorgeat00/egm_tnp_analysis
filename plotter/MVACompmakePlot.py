@@ -2,10 +2,11 @@ import ROOT as r
 import collections
 import math 
 import os
-wp='Tight' #'Tight', 'Medium'
-folder='2022EE'
-flag='results/withData/run3_golden/%s/eta_pt/passMVAId%s'%(folder,wp) #test_rf67
-flag2='results/withData/run3_golden/%s/eta_pt/pass%sId'%(folder,wp)
+wp='Medium' #'Tight', 'Medium'
+folder='2023_new'
+run='run3_2023'
+flag='results/withData/%s/%s/eta_pt/passMVAId%s'%(run,folder,wp) #test_rf67
+flag2='results/withData/%s/%s/eta_pt/pass%sId'%(run,folder,wp)
 #results=open("finalresults/TnP_ttH_muon_2018_2lss/passttH/egammaEffi.txt").readlines()
 results=open("%s/egammaEffi.txt"%flag).readlines()
 results2=open("%s/egammaEffi.txt"%flag2).readlines()
@@ -258,7 +259,9 @@ for plot in results_dict:
     doSpam('#scale[1.1]{#bf{CMS}} #scale[0.9]{#it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.4)
     if folder=='2022': doSpam('7.97 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
     elif folder=='2022EE': doSpam('26.3 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
-    else: doSpam('34.3 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    elif folder=='BPix': doSpam('9.52 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    elif folder=='2023' or folder.split('_')[0] == '2023': doSpam('18.0 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    else: doSpam('27.5 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5) #2022 --> 34.3
     if wp=='Medium': doSpam('%s WP'%wp,  0.72, .855,0.99, .895, align=12, textSize=0.033*1.5)
     else: doSpam('%s WP'%wp,  0.77, .855,0.99, .895, align=12, textSize=0.033*1.5)
     
@@ -274,12 +277,13 @@ for plot in results_dict:
     gr_ratio2.SetMarkerSize(1.5)
     gr_ratio.Draw('p,EZ,same')
     gr_ratio2.Draw('p,EZ,same')
-    if not os.path.exists('./results/run3_golden/%s/'%(folder)):
-       os.makedirs('./results/run3_golden/%s/'%(folder))
-       os.makedirs('/eos/user/j/jayllont/www/run3_golden/%s/'%(folder))
-    #c1.SaveAs('./results/run3/2022/eff_%s_comp%s_MVA_afterApp_FR_2.png'%(plot.replace('.','p'), wp))
-    #c1.SaveAs('./results/run3/2022/eff_%s_comp%s_MVA_afterApp_FR_2.pdf'%(plot.replace('.','p'), wp))
-    c1.SaveAs('./results/run3_golden/%s/eff_%s_comp%s_MVA_pt.png'%(folder,plot.replace('.','p'), wp))
-    c1.SaveAs('/eos/user/j/jayllont/www/run3_golden/%s/eff_%s_comp%s_MVA_pt.png'%(folder,plot.replace('.','p'), wp))
-    c1.SaveAs('./results/run3_golden/%s/eff_%s_comp%s_MVA_pt.pdf'%(folder,plot.replace('.','p'), wp))
+    if not os.path.exists('./results/%s/%s/'%(run,folder)):
+        os.makedirs('./results/%s/%s/'%(run,folder))
+        os.makedirs('/eos/user/j/jayllont/www/%s/%s/'%(run,folder))
+        os.system('cp /eos/user/j/jayllont/www/index.php /eos/user/j/jayllont/www/%s/%s/'%(run,folder))
+    #c1.SaveAs('./results/run3/full_eta/eff_%s_comp%s_MVA_afterAppPr_FR.png'%(plot.replace('.','p'), wp)) #prueba_pos
+    #c1.SaveAs('./results/run3/2022/eff_%s_comp%s_MVA_afterAppPr_FR.pdf'%(plot.replace('.','p'), wp))
+    c1.SaveAs('./results/%s/%s/eff_%s_comp%s_MVA_pt.png'%(run,folder,plot.replace('.','p'), wp))
+    c1.SaveAs('/eos/user/j/jayllont/www/%s/%s/eff_%s_comp%s_MVA_pt.png'%(run,folder,plot.replace('.','p'), wp))
+    c1.SaveAs('./results/%s/%s/eff_%s_comp%s_MVA_pt.pdf'%(run,folder,plot.replace('.','p'), wp))
 

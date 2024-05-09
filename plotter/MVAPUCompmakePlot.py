@@ -2,7 +2,7 @@ import ROOT as r
 import collections
 import math 
 import os
-wp='Medium' #'Tight', 'Medium'
+wp='Tight' #'Tight', 'Medium'
 folder='full'
 #run='run3_golden'
 run='run3_2023'
@@ -91,11 +91,14 @@ for plot in results_dict:
     p1.cd();
 
 
-    #frame=r.TH1F("frame","",1, 0, 60)
-    frame=r.TH1F("frame","",1, 25, 70)
-    if folder == 'full' or folder == '2022' or folder == '2022EE': frame.GetYaxis().SetRangeUser(0.955,1.01)
-    else: frame.GetYaxis().SetRangeUser(0.8,1.1)
+    frame=r.TH1F("frame","",1, 0, 70)
+    #frame=r.TH1F("frame","",1, 25, 70)
+    print(folder)
+    if folder == 'full' or folder == '2022' or folder == '2022EE' or folder == 'BPix' or folder == '2023': frame.GetYaxis().SetRangeUser(0.955,1.01)
+    #else: frame.GetYaxis().SetRangeUser(0.8,1.1)
+    else: frame.GetYaxis().SetRangeUser(0.955,1.01)
     if plot == '0.9-2.4' and wp == 'Tight': frame.GetYaxis().SetRangeUser(0.945,1.01)
+    if wp == 'Tight': frame.GetYaxis().SetRangeUser(0.945,1.01)
     frame.GetXaxis().SetTitleFont(42)
     frame.GetXaxis().SetTitleSize(0.06)
     frame.GetXaxis().SetTitleOffset(1.1)
@@ -121,19 +124,20 @@ for plot in results_dict:
     latex.SetTextFont(42);
 
     if plot == '0.0-0.9':
-        latex.DrawLatex(56.,1.003,"Muon |#eta| < 0.9");#56 if the axis begin in 25, 48 otherwise
+        #latex.DrawLatex(56.,1.003,"Muon |#eta| < 0.9");#56 if the axis begin in 25, 48 otherwise
+        latex.DrawLatex(48.,1.003,"Muon |#eta| < 0.9");
     elif plot == '0.9-2.4':
-        #latex.DrawLatex(40.,1.002,"Muon |#eta| > 0.9");
-        latex.DrawLatex(56.,1.002,"Muon |#eta| > 0.9");
+        latex.DrawLatex(48.,1.002,"Muon |#eta| > 0.9");
+        #latex.DrawLatex(56.,1.003,"Muon |#eta| > 0.9");
     p2.cd();
-    #frameratio=r.TH1F("ratioframe","",1, 0, 60)
-    frameratio=r.TH1F("ratioframe","",1, 25, 70)
+    frameratio=r.TH1F("ratioframe","",1, 0, 70)
+    #frameratio=r.TH1F("ratioframe","",1, 25, 70)
     frameratio.GetXaxis().SetTitle("Number of vertices")
     frameratio.SetBinError(1,0)
     frameratio.SetBinContent(1,1)
-    #frameratio.GetYaxis().SetRangeUser(0.98,1.02)
-    frameratio.GetYaxis().SetRangeUser(0.94,1.06)
-    #if plot == '0.9-2.4' and wp == 'Tight': frameratio.GetYaxis().SetRangeUser(0.96,1.04)
+    frameratio.GetYaxis().SetRangeUser(0.98,1.02)
+    #frameratio.GetYaxis().SetRangeUser(0.96,1.04)
+    if plot == '0.9-2.4' and wp == 'Tight': frameratio.GetYaxis().SetRangeUser(0.96,1.04)
     if plot == '0.9-2.4': frameratio.GetYaxis().SetRangeUser(0.96,1.04)
     frameratio.GetXaxis().SetTitleFont(42)
     frameratio.GetXaxis().SetTitleSize(0.14)
@@ -265,7 +269,9 @@ for plot in results_dict:
     doSpam('#scale[1.1]{#bf{CMS}} #scale[0.9]{#it{Preliminary}}',  0.16, .955,0.6, .995, align=12, textSize=0.033*1.4)
     if '2022' == folder.split("_")[-1]: doSpam('7.97 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
     elif '2022EE' == folder.split("_")[-1]: doSpam('26.3 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
-    else: doSpam('34.3 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)#35.1, 8.62, 26.92 #new 34.3 26.3 7.97
+    elif folder=='BPix' or 'BPix' == folder.split("_")[0]: doSpam('9.52 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)
+    elif folder == '2023': doSpam('18.0 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)#17.98
+    else: doSpam('27.5 fb^{-1} (13.6 TeV)',  0.61, .955,0.99, .995, align=12, textSize=0.033*1.5)#35.1, 8.62, 26.92 #new 34.3 26.3 7.97
     if wp=='Medium': doSpam('%s WP'%wp,  0.72, .885,0.99, .915, align=12, textSize=0.033*1.5)
     #else: doSpam('%s WP'%wp,  0.77, .855,0.99, .895, align=12, textSize=0.033*1.5)
     else: doSpam('%s WP'%wp,  0.77, .885,0.99, .915, align=12, textSize=0.033*1.5)    
@@ -282,6 +288,7 @@ for plot in results_dict:
     gr_ratio2.SetMarkerSize(1.5)
     gr_ratio.Draw('p,EZ,same')
     gr_ratio2.Draw('p,EZ,same')
+    #folder='BPix_tight_binning'
     if not os.path.exists('./results/%s/%s/'%(run,folder)):
        os.makedirs('./results/%s/%s/'%(run,folder))
        os.makedirs('/eos/user/j/jayllont/www/%s/%s/'%(run,folder))
@@ -292,5 +299,5 @@ for plot in results_dict:
     c1.SaveAs('/eos/user/j/jayllont/www/%s/%s/eff_%s_comp%s_MVA_PU.png'%(run,folder,plot.replace('.','p'), wp))
     c1.SaveAs('./results/%s/%s/eff_%s_comp%s_MVA_PU.pdf'%(run,folder,plot.replace('.','p'), wp))
 
-    
+    #folder='BPix' 
                             

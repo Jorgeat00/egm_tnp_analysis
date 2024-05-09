@@ -25,7 +25,7 @@ flags = {
     }
 
 #baseOutDir = 'results/withData/test_rf67/eta_pu/' #eta_pt, eta_pu
-baseOutDir = 'results/withData/run3/eta_pt/'
+baseOutDir = 'results/withData/run3_2023/2023_new/eta_pt/'
 #############################################################
 ########## samples definition  - preparing the samples
 #############################################################
@@ -85,9 +85,13 @@ if not samplesDef['tagSel'] is None: samplesDef['tagSel'].set_weight(weightName)
 ########## bining definition  [can be nD bining]
 #############################################################
 biningDef = [
-   { 'var' : 'abs(Probe_eta)' , 'type': 'float', 'bins': [0, 0.9, 2.4]},#[0.9, 1.2, 2.1, 2.4] },#[0,2.4]},#
+   { 'var' : 'abs(Probe_eta)' , 'type': 'float', 'bins': [0, 0.9, 2.4]},#[0,0.3,0.9, 1.2,1.6, 2.1, 2.4] },#[0, 0.9, 2.4]}, #[0.9, 1.2,1.6, 2.1, 2.4] }, #[0, 0.9, 2.4]},#[0.9, 1.2, 2.1, 2.4] },#[0,2.4]},#
    { 'var' : 'Probe_pt' , 'type': 'float', 'bins': [10,20,30,40,50,60,80,120] },
    #{ 'var' : 'TnP_npvsGood' , 'type': 'float', 'bins': [0,10,20,25,30,35,40,45,60] },
+   #{ 'var' : 'Probe_eta' , 'type': 'float', 'bins': [-2.4, -2.1, -1.6, -1.2, -0.9, -0.3, -0.2, 0.2, 0.3, 0.9, 1.2, 1.6, 2.1, 2.4] },
+   #{ 'var' : 'Probe_pt' , 'type': 'float', 'bins': [15,200] },
+   #{ 'var' : 'TnP_npvsGood' , 'type': 'float', 'bins': [0,10,20,25,30,35,40,45,50,55,60,70] },#from 70 onwards the efficiency is 1
+   #{ 'var' : 'TnP_npvsGood' , 'type': 'float', 'bins': [25,28,31,34,37,40,43,46,49,52,55,58,61,64,67,70] },
 ]
 
 #############################################################
@@ -150,10 +154,17 @@ tnpParNomFit = [
     ]
 '''
 tnpParNomFit = [ #duplicated
+    #"meanP[-0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
+    #"meanF[0.0,-5.0,5.0]","sigmaF[0.4,0.2,5.0]",
+    #"acmsP[50.,30.,90.]","betaP[0.05,0.01,0.08]","gammaP[0.1, -2, 2]","peakP[90.0]",
+    #"acmsF[60.,50.,190.]","betaF[0.04,0.001,0.08]","gammaF[0.1, -1, 2]","peakF[90.0]",
+     
+    #bin 01 2023
     "meanP[-0.0,-5.0,5.0]","sigmaP[0.9,0.5,5.0]",
-    "meanF[0.0,-5.0,5.0]","sigmaF[0.4,0.2,5.0]",
+    "meanF[-0.0,-5.0,5.0]","sigmaF[0.4,0.2,2.0]",
     "acmsP[50.,30.,90.]","betaP[0.05,0.01,0.08]","gammaP[0.1, -2, 2]","peakP[90.0]",
-    "acmsF[60.,50.,190.]","betaF[0.04,0.001,0.08]","gammaF[0.1, -1, 2]","peakF[90.0]",
+    #"acmsF[60.,30.,250.]","betaF[0.04,0.01,0.5]","gammaF[0.1, -1, 2]","peakF[90.0]",
+    "acmsF[60.,10.,280.]","betaF[0.04,0.001,0.5]","gammaF[0.1, -1, 2]","peakF[90.0]",
     ]
 
 tnpParAltSigFit = [
