@@ -93,6 +93,8 @@ if args.createHists:
 
     for sampleType in tnpConf.samplesDef.keys():
         sample =  tnpConf.samplesDef[sampleType]
+        print(sample)
+        print('inside createHists')
         if sample is None : continue
         if sampleType == args.sample or args.sample == 'all' :
             print 'creating histogram for sample '
@@ -225,4 +227,4 @@ if args.sumUp:
 
     print 'Effis saved in file : ',  effFileName
     import libPython.EGammaID_scaleFactors as egm_sf
-    egm_sf.doEGM_SFs(effFileName,sampleToFit.lumi, axis=['vtx', 'eta']) #['pT','eta']
+    egm_sf.doEGM_SFs(effFileName,sampleToFit.lumi, axis=['pT', 'eta']) #['pT','eta']
